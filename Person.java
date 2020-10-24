@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Person {
    
    //Fields
@@ -47,5 +49,20 @@ public class Person {
    public void setEmail(String email) {
       
       this.email = email;
+   }
+   
+   public String saveToFile(){
+      return(navn + ";" + nummer + ";" + email);
+   }
+   
+   public static Person opretPerson(){
+      Scanner console = new Scanner(System.in);
+      System.out.print("Navn: ");
+      String name = console.nextLine();
+      System.out.print("Tlf: ");
+      String num = console.nextLine();
+      System.out.print("E-mail: ");
+      String mail = console.nextLine();
+      return new Person(name, num, mail);
    }
 }
