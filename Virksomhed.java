@@ -75,7 +75,7 @@ public class Virksomhed {
    }
    
    public static void kunderToFile(Virksomhed[] kunder)throws FileNotFoundException{
-      PrintStream save = new PrintStream(new File("kunder2.txt"));
+      PrintStream save = new PrintStream(new File("kunder.txt"));
       save.print(kunder.length + ";");
       for(int i=0; i<kunder.length; i++){
          save.print(kunder[i].saveToFile() +";");
