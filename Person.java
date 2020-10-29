@@ -7,24 +7,52 @@ public class Person {
    private String navn;
    private String nummer;
    private String email;
+   private String stilling;
+   private int CVR;
    
    //Constructor
    public Person(String navn, String nummer, String email) {
       this.navn = navn;
       this.nummer = nummer;
+      this.email = email;     
+   }
+   public Person (String navn, String nummer, String email,String stilling) {
+      this.navn = navn;
+      this.nummer = nummer;
       this.email = email;
-      
+      this.stilling = stilling;  
+  }
+     public Person (String navn, String nummer, String email,String stilling, int CVR) {
+      this.navn = navn;
+      this.nummer = nummer;
+      this.email = email;
+      this.CVR = CVR;
+      this.stilling = stilling;  
+  }
+ 
+   public Person() {           
    }
    public String toString() {
       
-      return navn + " " + nummer + " " + email;
+      return ("Navn: "+navn + " \nTlf: " + nummer + " \nMail: " + email + "\nStilling: " + stilling + "\nCVRNr: "+CVR);
    }
+
    
    // Getters
+
    public String getNavn(String navn) {
       
       return navn;
    }
+   public String geStilling(String stilling) {
+      
+     return stilling;
+   }
+public int getCVR(int CVR) {
+      
+      return CVR;
+   }
+
    
    public String getNummer(String nummer) {
       
@@ -37,10 +65,19 @@ public class Person {
    }
    
    // Setters
-   public void setNavn(String navn) {
+    public void setNavn(String navn) {
       
       this.navn = navn;
    }
+   public void setStilling(String stilling) {
+      
+      this.stilling = stilling;
+   }
+   public void setCVR (int CVR) {
+      
+      this.CVR = CVR;
+   }
+
    
    public void setNummer(String nummer) {
       
@@ -66,6 +103,32 @@ public class Person {
       String mail = console.nextLine();
       return new Person(name, num, mail);
    }
+     public static Person opretPersonForening(){
+      Scanner console = new Scanner(System.in);
+      System.out.print("Navn: ");
+      String name = console.nextLine();
+      System.out.print("Tlf: ");
+      String num = console.nextLine();
+      System.out.print("E-mail: ");
+      String mail = console.nextLine();
+      System.out.print("Forenings navn: ");
+      String forening = console.nextLine();
+      return new Person(name, num, mail,forening);
+   }
+     public static Person opretPersonCVR(){
+      Scanner console = new Scanner(System.in);
+      System.out.print("Navn: ");
+      String name = console.nextLine();
+      System.out.print("Tlf: ");
+      String num = console.nextLine();
+      System.out.print("E-mail: ");
+      String mail = console.nextLine();
+      System.out.print("Firma navn: ");
+      String firma = console.nextLine();
+      System.out.print("CVR Nr: ");
+      int CVR = console.nextInt();
+      return new Person(name, num, mail,firma,CVR);
+   }
    
    public static Person personFromFile(Scanner input){
       String name = input.next();
@@ -73,7 +136,8 @@ public class Person {
       String mail = input.next();
       return new Person(name, num, mail);
    }
-   public static Person[] medarbejdereFromFile()throws FileNotFoundException{
+   
+    public static Person[] medarbejdereFromFile()throws FileNotFoundException{
       Scanner load = new Scanner(new File("medarbejdere.txt"));
       load.useDelimiter(";");
       Person[] medarbejdere = new Person[load.nextInt()];
@@ -82,15 +146,15 @@ public class Person {
       }
       return medarbejdere;
    }
-   
+  
    public static void medarbejdereToFile(Person[] medarbejdere)throws FileNotFoundException{
-      PrintStream save = new PrintStream(new File("medarbejdere.txt"));
+      PrintStream save = new PrintStream(new File("medarbejdere2.txt"));
       save.print(medarbejdere.length + ";");
       for(int i=0; i<medarbejdere.length; i++){
          save.print(medarbejdere[i].saveToFile() +";");
       }
    }
-   
+  
    public static Person[] addPerson(Person[] medarbejdere){
       Person[] temp = new Person[medarbejdere.length + 1];
       for(int i = 0; i < medarbejdere.length; i++){
@@ -99,7 +163,7 @@ public class Person {
       temp[temp.length - 1] = Person.opretPerson();
       return temp;
    }
-   
+  
    public static Person[] deletePerson(Person[] medarbejdere, int valg){
       Person[] temp = new Person[medarbejdere.length - 1];
       for(int i = 0; i<valg-1; i++){
@@ -110,15 +174,15 @@ public class Person {
       }
       return temp;
    }
-   
+  
    public static Person personFraListe(Person[] personer){
       Scanner console = new Scanner(System.in);
       for (int i = 0; i<personer.length; i++){
-         System.out.println("(" + (i+1) + ") " + personer[i].navn);
+         System.out.println("(" + i+1 + ") " + personer[i].navn);
       }
       System.out.println("Vælg medarbejder: ");
       int valg = console.nextInt();
       return personer[valg-1];
    }
-   
+  
 }
