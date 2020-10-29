@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Virksomhed {
    private String firmaNavn;
    private Person kunde;
@@ -22,5 +24,18 @@ public class Virksomhed {
    }
    public void setPerson(Person kunde){
       this.kunde = kunde;   
+   }
+   
+   public String saveToFile(){
+      return (firmaNavn +  ";" + kunde.saveToFile());
+   }
+   
+   public static Virksomhed opretVirksomhed(){
+      Scanner console = new Scanner(System.in);
+      System.out.print("Virksomhed: ");
+      String firma = console.nextLine();
+      System.out.println("Detaljer om kontaktperson:");
+      Person kontakt = Person.opretPerson();
+      return new Virksomhed(firma, kontakt);
    }
  }  
