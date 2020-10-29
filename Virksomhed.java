@@ -2,16 +2,24 @@ import java.util.*;
 import java.io.*;
 
 public class Virksomhed {
+   
+   //Fields
    private String firmaNavn;
    private Person kunde;
    
+   //Constructor
    public Virksomhed(String firmaNavn, Person kunde){
       this.firmaNavn = firmaNavn;
       this.kunde = kunde;
    }
+   public Virksomhed(){
+   
+   }
+   
+   //Methods
    
    public String toString(){
-      return("Firmname: " + firmaNavn + " Kunde:" + kunde);
+      return("Firmname: " + firmaNavn + " \n" + kunde);
    }
    
    public String getfirmaNavn(String firmaNavn){
@@ -56,8 +64,18 @@ public class Virksomhed {
       return kunder;
    }
    
+   public static Virksomhed virksomhedFraListe(Virksomhed[] virksomheder){
+      Scanner console = new Scanner(System.in);
+      for (int i = 0; i<virksomheder.length; i++){
+         System.out.println("(" + i+1 + ") " + virksomheder[i].firmaNavn);
+      }
+      System.out.println("Vælg kunde: ");
+      int valg = console.nextInt();
+      return virksomheder[valg-1];
+   }
+   
    public static void kunderToFile(Virksomhed[] kunder)throws FileNotFoundException{
-      PrintStream save = new PrintStream(new File("kunder.txt"));
+      PrintStream save = new PrintStream(new File("kunder2.txt"));
       save.print(kunder.length + ";");
       for(int i=0; i<kunder.length; i++){
          save.print(kunder[i].saveToFile() +";");
@@ -81,15 +99,4 @@ public class Virksomhed {
       }
       return temp;
    }
-   
-   public static Virksomhed virksomhedFraListe(Virksomhed[] virksomheder){
-      Scanner console = new Scanner(System.in);
-      for (int i = 0; i<virksomheder.length; i++){
-         System.out.println("(" + (i+1) + ") " + virksomheder[i].firmaNavn);
-      }
-      System.out.println("Vælg kunde: ");
-      int valg = console.nextInt();
-      return virksomheder[valg-1];
-   }
-   
  }  
