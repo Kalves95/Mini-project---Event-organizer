@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Event {
    private String eventnavn;
@@ -16,6 +17,9 @@ public class Event {
       facilitator = faci;
       eventansvarlig = eansvar;
       weekend = week;
+   }
+   public Event(){
+   
    }
    
    //Methods
@@ -82,10 +86,17 @@ public class Event {
    }
 
    public String toString() {
-      return("Name of Event: " +getEventNavn()+"\nName of customer: "+getVirksomhed()+"\nDuration of event: "+getVarighedTimer()+"\nIs facilitator present?: "+getFacilitator()+
-             "\nName of Eventansvarlig: "+getEventAnsvar()+"\nIs it weekend?: "+getWeekend());
+   int count = 0;
+   int sum = 100;
+   for(int i = 0; i < varighedTimer; i++){
+      count++;
+      sum += 250;
    }
-   
+   int moms = (int)(sum*0.25) + sum;
+   return String.format("Event navn\n----------\n%s\n\nInfo om kunde\n-------------\n%s\n\nEr facilitator tilstede?: %b \n"+
+          "\nEr det weekend?: %b \n\nEventansvarlig navn\n-------------------\n%s\n\nVarighed & pris (oprettesle 100kr)\n----------------------------------\n"+
+          "%.1f Timer %d kr. uden moms. %d kr. med moms.",getEventNavn(),getVirksomhed(),getFacilitator(),getWeekend(),getEventAnsvar(),getVarighedTimer(),sum,moms);
+   }   
    public String saveToFile(){
       String facil = "nej";
       if (facilitator){
@@ -143,19 +154,19 @@ public class Event {
       return new Event(name, dtime, kunde, facilitator, ansvarlig, weekend);
    }
    
-   public void redigerEvent(Person[] medarbejdere){
+   public void redigerEvent(){
       Scanner console = new Scanner(System.in);
       int svar = 1;
       String confirm = "";
       while (svar != 7){
          System.out.println("Hvilken af de følgende vil du redigere?");
-         System.out.println("(1) Eventnavn");
-         System.out.println("(2) Varighed");
-         System.out.println("(3) Kunde");
-         System.out.println("(4) Om der er facilitator til stede");
-         System.out.println("(5) Eventansvarlige medarbejder");
-         System.out.println("(6) Om eventet finder sted i en weekend");
-         System.out.println("(7) Aflsut eventredigering");
+         System.out.println("Tast 1 for eventnavn");
+         System.out.println("Tast 2 for varighed");
+         System.out.println("Tast 3 for kunde");
+         System.out.println("Tast 4 for om der er facilitator til stede");
+         System.out.println("Tast 5 for eventansvarlige medarbejder");
+         System.out.println("Tast 6 for om eventet finder sted i en weekend");
+         System.out.println("Tast 7 for aflsut eventredigering");
          svar = console.nextInt();
          console.nextLine();
          switch (svar){
@@ -167,7 +178,6 @@ public class Event {
             case 2:
                System.out.println("Indtast varighed: ");
                double nyVarighed = console.nextDouble();
-               console.nextLine();
                setTimer(nyVarighed);
                break;
             case 3:
@@ -177,7 +187,7 @@ public class Event {
             case 4:
                System.out.println("Er der en facilitator til stede?");
                System.out.print("Indtast 'ja' eller 'nej': ");
-               confirm = console.nextLine();
+               confirm = console.next();
                if (confirm.equals("ja")){
                   setFacilitator(true);
                } else if (confirm.equals("nej")){
@@ -187,12 +197,13 @@ public class Event {
                }
                break;
             case 5:
-               eventansvarlig = Person.personFraListe(medarbejdere);
+               //Metoden skal bare gøre det muligt at tilknytte en anden eventansvarlig. Redigering i personaleinformationer sker andetsted i programmet.
+               //eventansvarlig.skiftPerson();
                break;
             case 6:
                System.out.println("Finder eventet sted en weekend?");
                System.out.print("Indtast 'ja' eller 'nej': ");
-               confirm = console.nextLine();
+               confirm = console.next();
                if (confirm.equals("ja")){
                   setWeekend(true);
                } else if (confirm.equals("nej")){
@@ -204,7 +215,8 @@ public class Event {
             case 7:
                break;
             default:
-               System.out.println("Indtast venligst et gyldigt nummer, tak.");
+               System.out.println("Hovedmenu");
+               System.out.println("---------");
          }
       }
    }
