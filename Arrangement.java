@@ -1,5 +1,3 @@
-//Sidst redigeret: 22/10-20, 14:08
-
 import java.io.*;
 import java.util.*;
 
@@ -24,17 +22,6 @@ public class Arrangement{
          temp[i] = arr[i];
       }
       temp[temp.length - 1] = Event.opretEvent(customer, eventAnsvarlig);
-      arr = temp;
-   }
-   
-   public void deleteEvent(int valg){
-      Event[] temp = new Event[arr.length - 1];
-      for(int i = 0; i<valg-1; i++){
-         temp[i] = arr[i];
-      }
-      for(int i = valg + 1; i < arr.length; i++){
-         temp[i-1] = arr[i];
-      }
       arr = temp;
    }
    
@@ -81,7 +68,7 @@ public class Arrangement{
       return new Arrangement(arr);
    }
    
-   public static Arrangement opretArrangement(Virksomhed kunde, Person[] medarbejdere){
+   public static Arrangement opretArrangement(Virksomhed kunde){
       Scanner console = new Scanner(System.in);
       Arrangement arr = new Arrangement();
       System.out.println("Vil du føje et event til arrangementet?");
@@ -89,7 +76,7 @@ public class Arrangement{
       String svar = console.nextLine();
       while (svar.equals("ja")){
          System.out.println("Indtast eventansvarlig-");
-         Person ansvarlig = Person.personFraListe(medarbejdere);
+         Person ansvarlig = Person.opretPerson();
          arr.addEvent(kunde, ansvarlig);
          System.out.println("Vil du føje endnu et event til arrangementet?");
          System.out.print(" Indtast 'ja' eller 'nej': ");
@@ -98,18 +85,38 @@ public class Arrangement{
       return arr;
    }
    
-   public void redigerArrangement(Person[] medarbejdere)throws FileNotFoundException{
+   public void searchArray() {
+      Scanner scan = new Scanner(System.in);
+      System.out.print("Search array: ");
+      String valueToSearch = scan.nextLine();
+      boolean isExists = false;
+      for (int i = 0; i < arr.length; i++) {
+        String arrayValue = arr[i].getEventNavn();
+        if (valueToSearch.equals(arrayValue)) {
+           isExists = true;
+           System.out.println("Fundet på position: " + (i+1));
+           break;
+        }
+         }
+         if(isExists) {
+            System.out.println("String is found in the array");
+         }else{
+             System.out.println("String is not found in the array");
+         }
+   }
+   
+   public void redigerArrangement() throws FileNotFoundException{
       Scanner console = new Scanner(System.in);
       int svar = 1;
       boolean gem = true;
       while (svar !=5){
+         System.out.println("------------------------------------");
          System.out.println("Tast 1 hvis du vil tilføje et event.");
          System.out.println("Tast 2 hvis du vil redigere et ekstisterende event.");
          System.out.println("Tast 3 hvis du vil fjerne et event.");
          System.out.println("Tast 4 hvis du vil gemme ændringer.");
          System.out.println("Tast 5 for at afslutte");
          svar = console.nextInt();
-         console.nextLine();
          switch (svar){
             case 1:
                System.out.println("Du har valgt at tilføje et event til arrangementet.");
@@ -124,10 +131,8 @@ public class Arrangement{
                   System.out.println("(" + (i+1) + ")" + arr[i].getEventNavn());
                }
                System.out.print("Rediger: ");
-               int rediger = console.nextInt() - 1;
-               console.nextLine();
-               System.out.println(arr[rediger]);
-               arr[rediger].redigerEvent(medarbejdere);
+               int rediger = console.nextInt() - 1; //HER HER HER
+               arr[rediger].redigerEvent();
                //Vælg en af events'ne med Scanneren. Brug redigerEvent() på det event.
                gem = false;
                break;
@@ -140,7 +145,9 @@ public class Arrangement{
                }
                System.out.print("Fjern: ");
                int slet = console.nextInt() - 1;
-               console.nextLine();
+               //Virksomhed v1 = Virksomhed.opretVirksomhed();
+               //Person p1 = Person.opretPerson();
+               //Event e1 = Event.opretEvent(v1,p1);
                deleteEvent(slet);
                System.out.println("Eventet er fjernet.");
                gem = false;
@@ -164,5 +171,16 @@ public class Arrangement{
                System.out.println("Indtast venligst et gyldigt nummer, tak.");
          }
       }
+   }
+   
+   public void deleteEvent(int valg){
+      Event[] temp = new Event[arr.length - 1];
+      for(int i = 0; i<valg-1; i++){
+         temp[i] = arr[i];
+      }
+      for(int i = valg + 1; i < arr.length; i++){
+         temp[i-1] = arr[i];
+      }
+      arr = temp;
    }
 }
