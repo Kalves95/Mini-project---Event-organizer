@@ -39,13 +39,31 @@ public class Virksomhed {
       return (firmaNavn +  ";" + kunde.saveToFile());
    }
    
-   public static Virksomhed opretVirksomhed(){
+   public static Virksomhed opretVirksomhedCVR(){
+      Scanner console = new Scanner(System.in);
+      System.out.print("Virksomhed: ");
+      String firma = console.nextLine();
+      System.out.println("CVR");
+      int CVR = console.nextInt();
+      System.out.println("Detaljer om kontaktperson:");
+      Person kontakt = Person.opretPersonCVR(firma,CVR);
+      return new Virksomhed(firma, kontakt);
+   }
+   public static Virksomhed opretVirksomhedPrivat(){
       Scanner console = new Scanner(System.in);
       System.out.print("Virksomhed: ");
       String firma = console.nextLine();
       System.out.println("Detaljer om kontaktperson:");
       Person kontakt = Person.opretPerson();
       return new Virksomhed(firma, kontakt);
+   }
+   public static Virksomhed opretVirksomhedForening(){
+      Scanner console = new Scanner(System.in);
+      System.out.print("Forenings navn: ");
+      String forening = console.nextLine();
+      System.out.println("Detaljer om kontaktperson:");
+      Person kontakt = Person.opretPersonForening(forening);
+      return new Virksomhed(forening, kontakt);
    }
    
    public static Virksomhed virksomhedFromFile(Scanner input){
@@ -69,7 +87,7 @@ public class Virksomhed {
       for (int i = 0; i<virksomheder.length; i++){
          System.out.println("(" + i+1 + ") " + virksomheder[i].firmaNavn);
       }
-      System.out.println("Vælg kunde: ");
+      System.out.println("VÃ¦lg kunde: ");
       int valg = console.nextInt();
       return virksomheder[valg-1];
    }
@@ -81,14 +99,32 @@ public class Virksomhed {
          save.print(kunder[i].saveToFile() +";");
       }
    }
-   public static Virksomhed[] addVirksomhed(Virksomhed[] kunde){
+   public static Virksomhed[] addVirksomhedCVR(Virksomhed[] kunde){
       Virksomhed[] temp = new Virksomhed[kunde.length + 1];
       for(int i = 0; i < kunde.length; i++){
          temp[i] = kunde[i];
       }
-      temp[temp.length - 1] = Virksomhed.opretVirksomhed();
+      temp[temp.length - 1] = Virksomhed.opretVirksomhedCVR();
       return temp;
    }
+   public static Virksomhed[] addVirksomhedPrivat(Virksomhed[] kunde){
+      Virksomhed[] temp = new Virksomhed[kunde.length + 1];
+      for(int i = 0; i < kunde.length; i++){
+         temp[i] = kunde[i];
+      }
+      temp[temp.length - 1] = Virksomhed.opretVirksomhedPrivat();
+      return temp;
+      }
+      public static Virksomhed[] addVirksomhedForening(Virksomhed[] kunde){
+      Virksomhed[] temp = new Virksomhed[kunde.length + 1];
+      for(int i = 0; i < kunde.length; i++){
+         temp[i] = kunde[i];
+      }
+      temp[temp.length - 1] = Virksomhed.opretVirksomhedForening();
+      return temp;
+      }
+   
+   
    public static Virksomhed[] deleteVirksomhed(Virksomhed[] kunde, int valg){
       Virksomhed[] temp = new Virksomhed[kunde.length - 1];
       for(int i = 0; i<valg-1; i++){
