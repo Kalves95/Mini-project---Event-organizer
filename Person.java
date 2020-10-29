@@ -65,7 +65,7 @@ public int getCVR(int CVR) {
    }
    
    // Setters
-    public void setNavn(String navn) {
+   public void setNavn(String navn) {
       
       this.navn = navn;
    }
@@ -103,19 +103,19 @@ public int getCVR(int CVR) {
       String mail = console.nextLine();
       return new Person(name, num, mail);
    }
-     public static Person opretPersonForening(){
-      Scanner console = new Scanner(System.in);
-      System.out.print("Navn: ");
-      String name = console.nextLine();
-      System.out.print("Tlf: ");
-      String num = console.nextLine();
-      System.out.print("E-mail: ");
-      String mail = console.nextLine();
-      System.out.print("Forenings navn: ");
-      String forening = console.nextLine();
-      return new Person(name, num, mail,forening);
+    public static Person opretPersonForening(){
+       Scanner console = new Scanner(System.in);
+       System.out.print("Navn: ");
+       String name = console.nextLine();
+       System.out.print("Tlf: ");
+       String num = console.nextLine();
+       System.out.print("E-mail: ");
+       String mail = console.nextLine();
+       System.out.print("Forenings navn: ");
+       String forening = console.nextLine();
+       return new Person(name, num, mail,forening);
    }
-     public static Person opretPersonCVR(){
+   public static Person opretPersonCVR(){
       Scanner console = new Scanner(System.in);
       System.out.print("Navn: ");
       String name = console.nextLine();
@@ -137,7 +137,7 @@ public int getCVR(int CVR) {
       return new Person(name, num, mail);
    }
    
-    public static Person[] medarbejdereFromFile()throws FileNotFoundException{
+   public static Person[] medarbejdereFromFile()throws FileNotFoundException{
       Scanner load = new Scanner(new File("medarbejdere.txt"));
       load.useDelimiter(";");
       Person[] medarbejdere = new Person[load.nextInt()];
@@ -148,7 +148,7 @@ public int getCVR(int CVR) {
    }
   
    public static void medarbejdereToFile(Person[] medarbejdere)throws FileNotFoundException{
-      PrintStream save = new PrintStream(new File("medarbejdere2.txt"));
+      PrintStream save = new PrintStream(new File("medarbejdere.txt"));
       save.print(medarbejdere.length + ";");
       for(int i=0; i<medarbejdere.length; i++){
          save.print(medarbejdere[i].saveToFile() +";");
@@ -178,7 +178,7 @@ public int getCVR(int CVR) {
    public static Person personFraListe(Person[] personer){
       Scanner console = new Scanner(System.in);
       for (int i = 0; i<personer.length; i++){
-         System.out.println("(" + i+1 + ") " + personer[i].navn);
+         System.out.println("(" + (i+1) + ") " + personer[i].navn);
       }
       System.out.println("Vælg medarbejder: ");
       int valg = console.nextInt();
