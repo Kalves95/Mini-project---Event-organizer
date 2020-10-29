@@ -30,6 +30,19 @@ public class Event {
       System.out.println("Tid = "+count+" timer"+" Pris = "+sum+" kr.");
    }
    
+   public int getPrice(){
+      int pris = 100;
+      if (facilitator){
+         if (weekend){
+            pris += varighedTimer * 350;
+         }else{
+            pris += varighedTimer * 250;
+         }
+         pris = (int) pris;
+      }
+      return pris;
+   }
+   
    public void setEventNavn(String enavn) {
       eventnavn = enavn;
    }
@@ -109,5 +122,90 @@ public class Event {
          weekend = true;
       }
       return new Event(navn, tid, kunde, facilitator, ansvarlig, weekend);
+   }
+   
+   public static Event eventFromFile(Scanner input){
+      String name = input.next();
+      String time = input.next();
+      double dtime = Double.valueOf(time);
+      Virksomhed kunde = Virksomhed.virksomhedFromFile(input);
+      String facil = input.next();
+      boolean facilitator = false;
+      if (facil.equals("ja")){
+         facilitator = true;
+      }
+      Person ansvarlig = Person.personFromFile(input);
+      String weekE= input.next();
+      boolean weekend = true;
+      if (weekE.equals("ja")){
+         weekend = true;
+      }
+      return new Event(name, dtime, kunde, facilitator, ansvarlig, weekend);
+   }
+   
+   public void redigerEvent(Person[] medarbejdere){
+      Scanner console = new Scanner(System.in);
+      int svar = 1;
+      String confirm = "";
+      while (svar != 7){
+         System.out.println("Hvilken af de følgende vil du redigere?");
+         System.out.println("(1) Eventnavn");
+         System.out.println("(2) Varighed");
+         System.out.println("(3) Kunde");
+         System.out.println("(4) Om der er facilitator til stede");
+         System.out.println("(5) Eventansvarlige medarbejder");
+         System.out.println("(6) Om eventet finder sted i en weekend");
+         System.out.println("(7) Aflsut eventredigering");
+         svar = console.nextInt();
+         console.nextLine();
+         switch (svar){
+            case 1:
+               System.out.print("Indtast nyt eventnavt: ");
+               String nytNavn = console.nextLine();
+               setEventNavn(nytNavn);
+               break;
+            case 2:
+               System.out.println("Indtast varighed: ");
+               double nyVarighed = console.nextDouble();
+               console.nextLine();
+               setTimer(nyVarighed);
+               break;
+            case 3:
+               //Er denne her overhovedet nødvendig? Vi kan vel redigere kundeinformationer andetsteds i programmet.
+               //kunde.redigerVirksomhed();
+               break;
+            case 4:
+               System.out.println("Er der en facilitator til stede?");
+               System.out.print("Indtast 'ja' eller 'nej': ");
+               confirm = console.nextLine();
+               if (confirm.equals("ja")){
+                  setFacilitator(true);
+               } else if (confirm.equals("nej")){
+                  setFacilitator(false);
+               } else{
+                  System.out.println("Forkert værdi indtastet. Ingen ændring foretaget.");
+               }
+               break;
+            case 5:
+               eventansvarlig = Person.personFraListe(medarbejdere);
+               break;
+            case 6:
+               System.out.println("Finder eventet sted en weekend?");
+               System.out.print("Indtast 'ja' eller 'nej': ");
+               confirm = console.nextLine();
+               if (confirm.equals("ja")){
+                  setWeekend(true);
+               } else if (confirm.equals("nej")){
+                  setWeekend(false);
+               } else{
+                  System.out.println("Forkert værdi indtastet. Ingen ændring foretaget.");
+               }
+               break;
+            case 7:
+               break;
+            default:
+               System.out.println("Indtast venligst et gyldigt nummer, tak.");
+         }
+      }
    }
 }
