@@ -68,7 +68,7 @@ public class Arrangement{
       return new Arrangement(arr);
    }
    
-   public static Arrangement opretArrangement(Virksomhed kunde){
+   public static Arrangement opretArrangement(Virksomhed kunde, Person[] medarbejdere){
       Scanner console = new Scanner(System.in);
       Arrangement arr = new Arrangement();
       System.out.println("Vil du føje et event til arrangementet?");
@@ -76,7 +76,7 @@ public class Arrangement{
       String svar = console.nextLine();
       while (svar.equals("ja")){
          System.out.println("Indtast eventansvarlig-");
-         Person ansvarlig = Person.opretPerson();
+         Person ansvarlig = Person.personFraListe(medarbejdere);
          arr.addEvent(kunde, ansvarlig);
          System.out.println("Vil du føje endnu et event til arrangementet?");
          System.out.print(" Indtast 'ja' eller 'nej': ");
@@ -117,6 +117,7 @@ public class Arrangement{
          System.out.println("Tast 4 hvis du vil gemme ændringer.");
          System.out.println("Tast 5 for at afslutte");
          svar = console.nextInt();
+	 console.nextLine();
          switch (svar){
             case 1:
                System.out.println("Du har valgt at tilføje et event til arrangementet.");
@@ -131,8 +132,10 @@ public class Arrangement{
                   System.out.println("(" + (i+1) + ")" + arr[i].getEventNavn());
                }
                System.out.print("Rediger: ");
-               int rediger = console.nextInt() - 1; //HER HER HER
-               arr[rediger].redigerEvent();
+               int rediger = console.nextInt() - 1;
+	            console.nextLine();
+               System.out.println(arr[rediger]);
+               arr[rediger].redigerEvent(medarbejdere);
                //Vælg en af events'ne med Scanneren. Brug redigerEvent() på det event.
                gem = false;
                break;
@@ -145,9 +148,7 @@ public class Arrangement{
                }
                System.out.print("Fjern: ");
                int slet = console.nextInt() - 1;
-               //Virksomhed v1 = Virksomhed.opretVirksomhed();
-               //Person p1 = Person.opretPerson();
-               //Event e1 = Event.opretEvent(v1,p1);
+               console.nextLine();
                deleteEvent(slet);
                System.out.println("Eventet er fjernet.");
                gem = false;
