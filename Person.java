@@ -103,7 +103,7 @@ public int getCVR(int CVR) {
       String mail = console.nextLine();
       return new Person(name, num, mail);
    }
-    public static Person opretPersonForening(){
+    public static Person opretPersonForening(String forening){
        Scanner console = new Scanner(System.in);
        System.out.print("Navn: ");
        String name = console.nextLine();
@@ -111,22 +111,16 @@ public int getCVR(int CVR) {
        String num = console.nextLine();
        System.out.print("E-mail: ");
        String mail = console.nextLine();
-       System.out.print("Forenings navn: ");
-       String forening = console.nextLine();
        return new Person(name, num, mail,forening);
    }
-   public static Person opretPersonCVR(){
+   public static Person opretPersonCVR(String firma,int CVR){
       Scanner console = new Scanner(System.in);
       System.out.print("Navn: ");
       String name = console.nextLine();
       System.out.print("Tlf: ");
       String num = console.nextLine();
       System.out.print("E-mail: ");
-      String mail = console.nextLine();
-      System.out.print("Firma navn: ");
-      String firma = console.nextLine();
-      System.out.print("CVR Nr: ");
-      int CVR = console.nextInt();
+      String mail = console.nextLine();     
       return new Person(name, num, mail,firma,CVR);
    }
    
@@ -180,7 +174,7 @@ public int getCVR(int CVR) {
       for (int i = 0; i<personer.length; i++){
          System.out.println("(" + (i+1) + ") " + personer[i].navn);
       }
-      System.out.println("Vælg medarbejder: ");
+      System.out.println("VÃ¦lg medarbejder: ");
       int valg = console.nextInt();
       return personer[valg-1];
    }
