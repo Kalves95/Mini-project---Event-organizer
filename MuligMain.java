@@ -12,8 +12,8 @@ public class MuligArrangementFordeling {
       System.out.printf("%27S %n", "Velkommen til PlanOrgan");
       System.out.println();
       int svar = 1;
-      Person p1 = new Person();
-      Virksomhed v1 = new Virksomhed();
+      //Person p1 = new Person();
+      //Virksomhed v1 = new Virksomhed();
             
       while(svar != 5) {
          System.out.printf("%s %n", "Tast 1 for person menu.");
@@ -30,7 +30,8 @@ public class MuligArrangementFordeling {
          case 1:
             System.out.println("Du har valgt at oprette en ny person");
             System.out.println("------------------------------------");
-            p1 = Person.opretPerson();
+            medarbejdere = Person.addPerson(medarbejdere);
+            Person.medarbejdereToFile(medarbejdere);
             //System.out.println(p1);
             System.out.println("------------------------------------");
                break;
@@ -45,21 +46,21 @@ public class MuligArrangementFordeling {
             if(svar1 == 1) {
                System.out.println("Du har valgt at oprette en privat kunde");
                System.out.println("---------------------------------------");
-               Person pr2 = Person.opretPerson();
+               Person pr2 = Person.opretPerson(); //Oprette virksomhedsobjekt?
                //System.out.println(pr2);
                System.out.println("---------------------------------------");
             
             } if(svar1 == 2) {
                System.out.println("Du har valgt at oprette en erhvervs kunde.");
                System.out.println("------------------------------------------");
-               Person er1 = Person.opretPersonCVR();               
+               Person er1 = Person.opretPersonCVR(); //Oprette virksomhedsobjekt?              
                //System.out.println(v1);
                System.out.println("------------------------------------------");
                            
             } if(svar1 == 3) {
                System.out.println("Du har valgt at oprette en forenings kunde.");
                System.out.println("-------------------------------------------");
-               Person fo2 = Person.opretPersonForening();
+               Person fo2 = Person.opretPersonForening(); //Oprette virksomhedsobjekt?
                //System.out.println(fo2);
                System.out.println("-------------------------------------------");
             }
@@ -75,6 +76,11 @@ public class MuligArrangementFordeling {
             if(svar2 == 1) {
                System.out.println("Du har valgt at oprette et arrengement."); // HER HER HER
                System.out.println("---------------------------------------");
+	       System.out.println("Vælg kunde: ");
+               Virksomhed kunde = Virksomhed.virksomhedFraListe(kunder);
+               arr = Arrangement.opretArrangement(kunde, medarbejdere);
+               arr.saveArrangementToFile();
+               System.out.println();
                a1 = Arrangement.opretArrangement(v1);//
                a1.saveArrangementToFile();
                System.out.println("---------------------------------------");
@@ -94,8 +100,8 @@ public class MuligArrangementFordeling {
                   case 1: // HER
                      System.out.println("Du har valgt at redigere et arrangement.");
                      System.out.println("----------------------------------------");
-                     //a1 = Arrangement.opretArrangement(v1);
-                     a1.redigerArrangement();
+                     a1 = Arrangement.loadArrangementFromFile();
+		     a1.redigerArrangement();
                      System.out.println("----------------------------------------");
                      break;
                   
@@ -168,6 +174,8 @@ public class MuligArrangementFordeling {
       }
       
      }
+     Person.medarbejdereToFile(medarbejdere);
+     Virksomhed.kunderToFile(kunder);
      System.out.println("Du har valgt at afslutte, fortsat god dag.");
      System.out.println("------------------------------------------");
    
