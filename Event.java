@@ -12,7 +12,7 @@ public class Event {
    public Event(String enavn, double time, Virksomhed kunde, boolean faci, Person eansvar, boolean week) {
       eventnavn = enavn;
       varighedTimer = time;
-      kunde = this.kunde;
+      this.kunde = kunde;
       facilitator = faci;
       eventansvarlig = eansvar;
       weekend = week;
@@ -71,5 +71,43 @@ public class Event {
    public String toString() {
       return("Name of Event: " +getEventNavn()+"\nName of customer: "+getVirksomhed()+"\nDuration of event: "+getVarighedTimer()+"\nIs facilitator present?: "+getFacilitator()+
              "\nName of Eventansvarlig: "+getEventAnsvar()+"\nIs it weekend?: "+getWeekend());
+   }
+   
+   public String saveToFile(){
+      String facil = "nej";
+      if (facilitator){
+         facil = "ja";
+      }
+      String weekE = "nej";
+      if (weekend){
+         weekE = "ja";
+      }
+      return (eventnavn + ";" + varighedTimer + ";" + kunde.saveToFile() + ";" + facil + ";" + eventansvarlig.saveToFile() + ";" + weekE);
+   }
+   
+   public static Event opretEvent(Virksomhed customer, Person eventAnsvarlig){
+      Scanner console = new Scanner(System.in);
+      System.out.print("Event-navn: ");
+      String navn = console.nextLine();
+      System.out.print("Varighed: ");
+      double tid = console.nextDouble();
+      console.nextLine();
+      Virksomhed kunde = customer;
+      System.out.println("Skal der være en facilitator til stede?");
+      System.out.print("Indtast 'ja' eller 'nej': ");
+      String facil = console.next();
+      boolean facilitator = false;
+      if(facil.equals("ja")){
+         facilitator = true;
+      }
+      Person ansvarlig = eventAnsvarlig;
+      System.out.println("Finder eventet sted i weekenden?");
+      System.out.print("Indtast 'ja' eller 'nej': ");
+      String weekE = console.next();
+      boolean weekend = false;
+      if(weekE.equals("ja")){
+         weekend = true;
+      }
+      return new Event(navn, tid, kunde, facilitator, ansvarlig, weekend);
    }
 }
