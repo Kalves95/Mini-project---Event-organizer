@@ -133,7 +133,7 @@ public class Arrangement{
                }
                System.out.print("Rediger: ");
                int rediger = console.nextInt() - 1;
-	            console.nextLine();
+	       console.nextLine();
                System.out.println(arr[rediger]);
                arr[rediger].redigerEvent(medarbejdere);
                //Vælg en af events'ne med Scanneren. Brug redigerEvent() på det event.
