@@ -14,7 +14,8 @@ public class Person {
    public Person(String navn, String nummer, String email) {
       this.navn = navn;
       this.nummer = nummer;
-      this.email = email;     
+      this.email = email;
+      stilling = "";     
    }
    public Person (String navn, String nummer, String email,String stilling) {
       this.navn = navn;
@@ -90,7 +91,7 @@ public int getCVR(int CVR) {
    }
    
    public String saveToFile(){
-      return(navn + ";" + nummer + ";" + email);
+      return(navn + ";" + nummer + ";" + email + ";" + stilling + ";" + CVR);
    }
    
    public static Person opretPerson(){
@@ -101,9 +102,11 @@ public int getCVR(int CVR) {
       String num = console.nextLine();
       System.out.print("E-mail: ");
       String mail = console.nextLine();
-      return new Person(name, num, mail);
+      System.out.print("Stilling: ");
+      String stil = console.nextLine();
+      return new Person(name, num, mail, stil);
    }
-    public static Person opretPersonForening(String forening){
+    public static Person opretPersonForening(){
        Scanner console = new Scanner(System.in);
        System.out.print("Navn: ");
        String name = console.nextLine();
@@ -111,16 +114,22 @@ public int getCVR(int CVR) {
        String num = console.nextLine();
        System.out.print("E-mail: ");
        String mail = console.nextLine();
+       System.out.print("Forenings navn: ");
+       String forening = console.nextLine();
        return new Person(name, num, mail,forening);
    }
-   public static Person opretPersonCVR(String firma,int CVR){
+   public static Person opretPersonCVR(){
       Scanner console = new Scanner(System.in);
       System.out.print("Navn: ");
       String name = console.nextLine();
       System.out.print("Tlf: ");
       String num = console.nextLine();
       System.out.print("E-mail: ");
-      String mail = console.nextLine();     
+      String mail = console.nextLine();
+      System.out.print("Firma navn: ");
+      String firma = console.nextLine();
+      System.out.print("CVR Nr: ");
+      int CVR = console.nextInt();
       return new Person(name, num, mail,firma,CVR);
    }
    
@@ -128,7 +137,9 @@ public int getCVR(int CVR) {
       String name = input.next();
       String num = input.next();
       String mail = input.next();
-      return new Person(name, num, mail);
+      String stil = input.next();
+      int cvr = input.nextInt();
+      return new Person(name, num, mail, stil, cvr);
    }
    
    public static Person[] medarbejdereFromFile()throws FileNotFoundException{
@@ -174,7 +185,7 @@ public int getCVR(int CVR) {
       for (int i = 0; i<personer.length; i++){
          System.out.println("(" + (i+1) + ") " + personer[i].navn);
       }
-      System.out.println("VÃ¦lg medarbejder: ");
+      System.out.println("Vælg medarbejder: ");
       int valg = console.nextInt();
       return personer[valg-1];
    }
