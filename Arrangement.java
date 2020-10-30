@@ -22,6 +22,7 @@ public class Arrangement{
          temp[i] = arr[i];
       }
       temp[temp.length - 1] = Event.opretEvent(customer, eventAnsvarlig);
+      System.out.println("Event oprettet!");
       arr = temp;
    }
    
@@ -41,9 +42,9 @@ public class Arrangement{
       return time;
    }
    
-   //Gemmer til en .txt-fil med et navn, som brugeren specificerer. FÃ¸rst skrivet et tal, som indikerer, hvor mange
-   //events, der er i arrangementet. DernÃ¦st kommer en vÃ¦rdier, der bruges som parametre i de forskellige
-   //konstruktorer. VÃ¦rdierne er adskildt af semikolon, hvilket en scanner med en delimitor kan genkende.
+   //Gemmer til en .txt-fil med et navn, som brugeren specificerer. Først skrivet et tal, som indikerer, hvor mange
+   //events, der er i arrangementet. Dernæst kommer en værdier, der bruges som parametre i de forskellige
+   //konstruktorer. Værdierne er adskildt af semikolon, hvilket en scanner med en delimitor kan genkende.
    public void saveArrangementToFile()throws FileNotFoundException{
       Scanner console = new Scanner(System.in);
       System.out.print("Indtast fil-navn. Udelad filtype: ");
@@ -71,14 +72,14 @@ public class Arrangement{
    public static Arrangement opretArrangement(Virksomhed kunde, Person[] medarbejdere){
       Scanner console = new Scanner(System.in);
       Arrangement arr = new Arrangement();
-      System.out.println("Vil du fÃ¸je et event til arrangementet?");
+      System.out.println("Vil du føje et event til arrangementet?");
       System.out.print(" Indtast 'ja' eller 'nej': ");
       String svar = console.nextLine();
       while (svar.equals("ja")){
          System.out.println("Indtast eventansvarlig-");
          Person ansvarlig = Person.personFraListe(medarbejdere);
          arr.addEvent(kunde, ansvarlig);
-         System.out.println("Vil du fÃ¸je endnu et event til arrangementet?");
+         System.out.println("Vil du føje endnu et event til arrangementet?");
          System.out.print(" Indtast 'ja' eller 'nej': ");
          svar = console.nextLine();
       }
@@ -94,7 +95,7 @@ public class Arrangement{
         String arrayValue = arr[i].getEventNavn();
         if (valueToSearch.equals(arrayValue)) {
            isExists = true;
-           System.out.println("Fundet pÃ¥ position: " + (i+1));
+           System.out.println("Fundet på position: " + (i+1));
            break;
         }
          }
@@ -111,18 +112,18 @@ public class Arrangement{
       boolean gem = true;
       while (svar !=5){
          System.out.println("------------------------------------");
-         System.out.println("Tast 1 hvis du vil tilfÃ¸je et event.");
+         System.out.println("Tast 1 hvis du vil tilføje et event.");
          System.out.println("Tast 2 hvis du vil redigere et ekstisterende event.");
          System.out.println("Tast 3 hvis du vil fjerne et event.");
-         System.out.println("Tast 4 hvis du vil gemme Ã¦ndringer.");
+         System.out.println("Tast 4 hvis du vil gemme ændringer.");
          System.out.println("Tast 5 for at afslutte");
          svar = console.nextInt();
-         //Måske scanner
 	 console.nextLine();
          switch (svar){
             case 1:
-               System.out.println("Du har valgt at tilfÃ¸je et event til arrangementet.");
-               //arr.addEvent(); //Der skal lige kigges pÃ¥ constructoren
+               System.out.println("Du har valgt at tilføje et event til arrangementet.");
+               //arr.addEvent(); //Der skal lige kigges på constructoren
+               System.out.println("Event oprettet!");
                gem = false;
                break;
             case 2:
@@ -137,7 +138,8 @@ public class Arrangement{
 	            console.nextLine();
                System.out.println(arr[rediger]);
                arr[rediger].redigerEvent(medarbejdere);
-               //VÃ¦lg en af events'ne med Scanneren. Brug redigerEvent() pÃ¥ det event.
+               System.out.println("Event redigeret!");
+               //Vælg en af events'ne med Scanneren. Brug redigerEvent() på det event.
                gem = false;
                break;
             case 3:
@@ -161,7 +163,7 @@ public class Arrangement{
                break;
             case 5:
                if(!gem){
-                  System.out.println("Vil du gemme dine Ã¦ndringer inden du afslutter?");
+                  System.out.println("Vil du gemme dine ændringer inden du afslutter?");
                   System.out.println("Indtast 'ja' eller 'nej': ");
                   String confirm = console.nextLine();
                   if(confirm.equals("ja")){
@@ -184,5 +186,16 @@ public class Arrangement{
          temp[i-1] = arr[i];
       }
       arr = temp;
+   }
+   
+   public void exportArrangement()throws FileNotFoundException{
+      Scanner console = new Scanner(System.in);
+      System.out.print("Indtast fil-navn. Udelad filtype: ");
+      String filename = console.next() + ".pdf";
+      PrintStream save = new PrintStream(new File(filename));
+      save.print(arr.length + ";");
+      for(int i=0; i<arr.length; i++){
+         save.print(arr[i].toString() +";");
+      }
    }
 }
