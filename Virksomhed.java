@@ -43,7 +43,7 @@ public class Virksomhed {
       Scanner console = new Scanner(System.in);
       System.out.print("Virksomhed: ");
       String firma = console.nextLine();
-      System.out.println("CVR");
+      System.out.print("CVR: ");
       int CVR = console.nextInt();
       System.out.println("Detaljer om kontaktperson:");
       Person kontakt = Person.opretPersonCVR(firma,CVR);
