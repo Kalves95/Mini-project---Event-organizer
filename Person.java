@@ -14,8 +14,7 @@ public class Person {
    public Person(String navn, String nummer, String email) {
       this.navn = navn;
       this.nummer = nummer;
-      this.email = email;
-      stilling = "";     
+      this.email = email;     
    }
    public Person (String navn, String nummer, String email,String stilling) {
       this.navn = navn;
@@ -93,7 +92,7 @@ public int getCVR(int CVR) {
    public String saveToFile(){
       return(navn + ";" + nummer + ";" + email + ";" + stilling + ";" + CVR);
    }
-   
+      
    public static Person opretPerson(){
       Scanner console = new Scanner(System.in);
       System.out.print("Navn: ");
@@ -104,7 +103,7 @@ public int getCVR(int CVR) {
       String mail = console.nextLine();
       System.out.print("Stilling: ");
       String stil = console.nextLine();
-      return new Person(name, num, mail, stil);
+      return new Person(name, num, mail,stil);
    }
     public static Person opretPersonForening(String forening){
        Scanner console = new Scanner(System.in);
@@ -116,14 +115,14 @@ public int getCVR(int CVR) {
        String mail = console.nextLine();
        return new Person(name, num, mail,forening);
    }
-   public static Person opretPersonCVR(String firma, int CVR){
+   public static Person opretPersonCVR(String firma,int CVR){
       Scanner console = new Scanner(System.in);
       System.out.print("Navn: ");
       String name = console.nextLine();
       System.out.print("Tlf: ");
       String num = console.nextLine();
       System.out.print("E-mail: ");
-      String mail = console.nextLine();
+      String mail = console.nextLine();     
       return new Person(name, num, mail,firma,CVR);
    }
    
@@ -183,5 +182,60 @@ public int getCVR(int CVR) {
       int valg = console.nextInt();
       return personer[valg-1];
    }
+   
+   public void redigerPerson(Person[] medarbejdere){
+      Scanner console = new Scanner(System.in);
+      int svar = 1;
+      String confirm = "";
+      while (svar != 6){
+         System.out.println("Hvilken af de følgende vil du redigere?");
+         System.out.println("Tast 1 for at redigere navn");
+         System.out.println("Tast 2 for at redigere nummer");
+         System.out.println("Tast 3 for at redigere email");
+         System.out.println("Tast 4 for at redigere stilling");
+         System.out.println("Tast 5 for at redigere CVR");
+         System.out.println("Tast 6 for at vende tilbage til hovedmenu.");
+         
+         svar = console.nextInt();
+         console.nextLine();
+         switch (svar){
+            case 1:
+               System.out.print("Indtast nyt navn: ");
+               String nytNavn = console.nextLine();
+               setNavn(nytNavn);
+               break;
+            case 2:
+               System.out.println("Indtast nummer: ");
+               String nytNummer = console.nextLine();
+               console.nextLine();
+               setNummer(nytNummer);
+               break;
+            case 3:
+               System.out.println("Indtast email: ");
+               String nyEmail = console.nextLine();
+               setEmail(nyEmail);
+                          
+               break;
+            case 4:
+               System.out.println("Indtast stilling: ");
+               String nyStilling = console.nextLine();
+               setStilling(nyStilling);
+               break;
+            case 5:
+               System.out.println("Indtast CVR: ");
+               int nyCVR = console.nextInt();
+               setCVR(nyCVR);
+               break;
+            
+            case 6:
+               break;
+               
+            default:
+               System.out.println("Hovedmenu");
+               System.out.println("---------");
+         }
+      }
+
   
+  }
 }
