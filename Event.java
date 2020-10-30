@@ -89,16 +89,24 @@ public class Event {
    public String toString() {
    int count = 0;
    int sum = 100;
-   for(int i = 0; i < varighedTimer; i++){
-      count++;
-      sum += 250;
+   
+   if(weekend == true) {         
+      for(int i = 0; i < varighedTimer; i++){
+         count++;
+         sum += 250;
+         
+         if(weekend == true) {
+            sum += 100;
+         }
+      
+      }
    }
    int moms = (int)(sum*0.25) + sum;
    return String.format("Event navn\n----------\n%s\n\nInfo om kunde\n-------------\n%s\n\nEr facilitator tilstede?: %b \n"+
           "\nEr det weekend?: %b \n\nEventansvarlig navn\n-------------------\n%s\n\nVarighed & pris (oprettesle 100kr)\n----------------------------------\n"+
           "%.1f Timer %d kr. uden moms. %d kr. med moms.",getEventNavn(),getVirksomhed(),getFacilitator(),getWeekend(),getEventAnsvar(),getVarighedTimer(),sum,moms);
    }   
-   public String saveToFile(){
+   public String saveToFileE(){
       String facil = "nej";
       if (facilitator){
          facil = "ja";
@@ -118,7 +126,7 @@ public class Event {
       double tid = console.nextDouble();
       console.nextLine();
       Virksomhed kunde = customer;
-      System.out.println("Skal der være en facilitator til stede?");
+      System.out.println("Skal der vÃ¦re en facilitator til stede?");
       System.out.print("Indtast 'ja' eller 'nej': ");
       String facil = console.next();
       boolean facilitator = false;
@@ -179,11 +187,11 @@ public class Event {
             case 2:
                System.out.println("Indtast varighed: ");
                double nyVarighed = console.nextDouble();
-               console.nextLine()
+               console.nextLine();
                setTimer(nyVarighed);
                break;
             case 3:
-               //Er denne her overhovedet nødvendig? Vi kan vel redigere kundeinformationer andetsteds i programmet.
+               //Er denne her overhovedet nÃ¸dvendig? Vi kan vel redigere kundeinformationer andetsteds i programmet.
                //kunde.redigerVirksomhed();
                break;
             case 4:
